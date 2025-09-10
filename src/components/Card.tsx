@@ -129,14 +129,14 @@ export const StatsCard: React.FC<StatsCardProps> = ({
     <Card className={className}>
       <div className="flex items-center justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
             {title}
           </p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">
+          <p className="text-lg font-bold text-gray-900 dark:text-white">
             {value}
           </p>
           {change && (
-            <p className={`text-sm ${changeClasses[change.type]}`}>
+            <p className={`text-xs ${changeClasses[change.type]}`}>
               {change.type === 'increase' && '+'}
               {change.value}
               {change.type === 'increase' && ' ↗'}
@@ -145,7 +145,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({
           )}
         </div>
         {icon && (
-          <div className="flex-shrink-0 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+          <div className="flex-shrink-0 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-md">
             {icon}
           </div>
         )}
