@@ -33,17 +33,17 @@ export const SessionCard: React.FC<SessionCardProps> = ({
     const getStatusBadge = (status: string) => {
         switch (status) {
             case 'WORKING':
-                return <StatusBadge status="active" size="sm" />;
+                return <StatusBadge status="active" size="xs" />;
             case 'SCAN_QR_CODE':
-                return <StatusBadge status="pending" size="sm" />;
+                return <StatusBadge status="pending" size="xs" />;
             case 'FAILED':
-                return <StatusBadge status="failed" size="sm" />;
+                return <StatusBadge status="failed" size="xs" />;
             case 'STOPPED':
-                return <StatusBadge status="inactive" size="sm" />;
+                return <StatusBadge status="inactive" size="xs" />;
             case 'STARTING':
-                return <StatusBadge status="pending" size="sm" />;
+                return <StatusBadge status="pending" size="xs" />;
             default:
-                return <StatusBadge status="pending" size="sm" />;
+                return <StatusBadge status="pending" size="xs" />;
         }
     };
 
@@ -97,9 +97,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
     return (
         <Card className="hover:shadow-md transition-shadow duration-200">
-            <CardHeader>
+            <CardHeader className="pb-1">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">
                         {session.name}
                     </h3>
                     {getStatusBadge(session.status)}
@@ -107,25 +107,25 @@ export const SessionCard: React.FC<SessionCardProps> = ({
             </CardHeader>
 
             <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-2">
                     {/* Ícone, PushName e Número */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
                             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                             </svg>
                         </div>
-                        <div>
+                        <div className="flex-1 min-w-0">
                             {session.me?.pushName ? (
-                                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                                     {session.me.pushName}
                                 </p>
                             ) : (
-                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
                                     Número não conectado
                                 </p>
                             )}
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                                 {session.me?.id}
                             </p>
                         </div>
@@ -142,12 +142,12 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                     )}
 
                     {/* Ações */}
-                    <div className="flex justify-center gap-4 pt-4">
+                    <div className="flex justify-center gap-2 pt-2">
                         {session.status === 'STARTING' ? (
                             // Quando está iniciando - mostrar loading
-                            <div className="flex items-center justify-center gap-4">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                                <span className="text-sm text-gray-600 dark:text-gray-400">Iniciando sessão...</span>
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                                <span className="text-xs text-gray-600 dark:text-gray-400">Iniciando...</span>
                             </div>
                         ) : !session.me ? (
                             // Quando não há 'me' e não está iniciando - apenas QR Code e Deletar
@@ -155,13 +155,13 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 <button
                                     onClick={handleShowQR}
                                     disabled={qrLoading}
-                                    className="w-12 h-12 rounded-full bg-purple-500 hover:bg-purple-600 active:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                    className="w-9 h-9 rounded-full bg-purple-500 hover:bg-purple-600 active:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                     title={session.status === 'SCAN_QR_CODE' ? 'Gerar QR Code' : 'Iniciar e Gerar QR Code'}
                                 >
                                     {qrLoading ? (
-                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                                     ) : (
-                                        <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                                         </svg>
                                     )}
@@ -170,9 +170,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 <button
                                     onClick={() => onDelete(session.name)}
                                     disabled={loading}
-                                    className="w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                    className="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                 >
-                                    <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                                         <rect x="8" y="9" width="8" height="10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
@@ -185,9 +185,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     <button
                                         onClick={() => onStart(session.name)}
                                         disabled={loading}
-                                        className="w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 active:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                        className="w-9 h-9 rounded-full bg-green-500 hover:bg-green-600 active:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                     >
-                                        <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M8 5v14l11-7z"/>
                                         </svg>
                                     </button>
@@ -195,9 +195,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     <button
                                         onClick={() => onStop(session.name)}
                                         disabled={loading}
-                                        className="w-12 h-12 rounded-full bg-gray-500 hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                        className="w-9 h-9 rounded-full bg-gray-500 hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                     >
-                                        <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M6 6h12v12H6z"/>
                                         </svg>
                                     </button>
@@ -206,9 +206,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 <button
                                     onClick={() => onRestart(session.name)}
                                     disabled={loading}
-                                    className="w-12 h-12 rounded-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                    className="w-9 h-9 rounded-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                 >
-                                    <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                     </svg>
                                 </button>
@@ -216,10 +216,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 <button
                                     onClick={() => onLogout(session.name)}
                                     disabled={loading}
-                                    className="w-12 h-12 rounded-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                    className="w-9 h-9 rounded-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                     title="Logout da sessão"
                                 >
-                                    <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
                                 </button>
@@ -227,9 +227,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 <button
                                     onClick={() => onDelete(session.name)}
                                     disabled={loading}
-                                    className="w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl group"
+                                    className="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
                                 >
-                                    <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                                         <rect x="8" y="9" width="8" height="10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>

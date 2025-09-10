@@ -12,7 +12,7 @@ interface BadgeProps {
 
 interface StatusBadgeProps {
   status: 'active' | 'inactive' | 'pending' | 'completed' | 'failed' | 'warning';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   showDot?: boolean;
   className?: string;
 }
@@ -99,12 +99,14 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   };
 
   const sizeClasses = {
+    xs: "px-1.5 py-0.5 text-xs gap-0.5",
     sm: "px-2 py-0.5 text-xs gap-1",
     md: "px-2.5 py-1 text-sm gap-1.5",
     lg: "px-3 py-1.5 text-base gap-2"
   };
 
   const dotSizeClasses = {
+    xs: "w-1 h-1",
     sm: "w-1.5 h-1.5",
     md: "w-2 h-2",
     lg: "w-2.5 h-2.5"

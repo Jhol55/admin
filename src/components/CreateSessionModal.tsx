@@ -147,9 +147,9 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900 rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
-                <div className="flex items-center justify-between p-6 border-b border-gray-700">
-                    <h2 className="text-2xl font-semibold text-white">
+            <div className="bg-gray-900 rounded-lg shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden">
+                <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                    <h2 className="text-xl font-semibold text-white">
                         Criar Nova Sessão
                     </h2>
                     <button
@@ -162,12 +162,12 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                     </button>
                 </div>
 
-                <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        <div className="space-y-6">
+                <div className="p-4 overflow-y-auto max-h-[calc(85vh-120px)]">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4">
                             {/* Nome da Sessão */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-3">
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
                                     Nome da Sessão *
                                 </label>
                                 <Input
@@ -195,33 +195,33 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                             </div>
 
                             {/* Metadata */}
-                            <div className="bg-gray-800 rounded-lg p-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <div className="bg-gray-800 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-6 h-6 bg-orange-500 rounded-md flex items-center justify-center">
                                             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-lg font-medium text-white">Metadata</h3>
-                                        <div className="w-4 h-4 bg-gray-600 rounded-full flex items-center justify-center">
+                                        <h3 className="text-base font-medium text-white">Metadata</h3>
+                                        <div className="w-3 h-3 bg-gray-600 rounded-full flex items-center justify-center">
                                             <span className="text-xs text-white">i</span>
                                         </div>
                                     </div>
                                     <Button
                                         type="button"
                                         onClick={addMetadata}
-                                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+                                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md text-sm"
                                     >
                                         + Metadata
                                     </Button>
                                 </div>
                                 
-                                <div className="space-y-3">
+                                <div className="space-y-2">
                                     {Object.entries(formData.config.metadata || {}).map(([key, value]) => (
-                                        <div key={key} className="grid grid-cols-12 gap-4 items-end">
+                                        <div key={key} className="grid grid-cols-12 gap-3 items-end">
                                             <div className="col-span-5">
-                                                <label className="block text-sm text-gray-400 mb-2">Key</label>
+                                                <label className="block text-xs text-gray-400 mb-1">Key</label>
                                                 <Input
                                                     type="text"
                                                     value={key}
@@ -231,7 +231,7 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                                 />
                                             </div>
                                             <div className="col-span-5">
-                                                <label className="block text-sm text-gray-400 mb-2">Value</label>
+                                                <label className="block text-xs text-gray-400 mb-1">Value</label>
                                                 <Input
                                                     type="text"
                                                     value={value}
@@ -244,10 +244,10 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                                 <button
                                                     type="button"
                                                     onClick={() => removeMetadata(key)}
-                                                    className="text-orange-500 hover:text-orange-400 p-2"
+                                                    className="text-orange-500 hover:text-orange-400 p-1"
                                                     title="Remover metadata"
                                                 >
-                                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                                                     </svg>
                                                 </button>
@@ -264,29 +264,29 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                             </div>
 
                             {/* Webhook */}
-                            <div className="bg-gray-800 rounded-lg p-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <div className="bg-gray-800 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center">
                                             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-lg font-medium text-white">Webhooks</h3>
+                                        <h3 className="text-base font-medium text-white">Webhooks</h3>
                                     </div>
                                     <Button
                                         type="button"
                                         onClick={addWebhook}
-                                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+                                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md text-sm"
                                     >
                                         + Webhook
                                     </Button>
                                 </div>
                                 
                                 {formData.config.webhooks?.map((webhook, index) => (
-                                    <div key={index} className="bg-gray-700 rounded-lg p-4 mb-4">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <h4 className="font-medium text-white">Webhook {index + 1}</h4>
+                                    <div key={index} className="bg-gray-700 rounded-md p-3 mb-3">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <h4 className="text-sm font-medium text-white">Webhook {index + 1}</h4>
                                             {formData.config.webhooks && formData.config.webhooks.length > 1 && (
                                                 <button
                                                     type="button"
@@ -299,9 +299,9 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                                 </button>
                                             )}
                                         </div>
-                                        <div className="space-y-4">
+                                        <div className="space-y-3">
                                             <div>
-                                                <label className="block text-sm text-gray-400 mb-2">URL</label>
+                                                <label className="block text-xs text-gray-400 mb-1">URL</label>
                                                 <Input
                                                     type="url"
                                                     value={webhook.url}
@@ -311,7 +311,7 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-sm text-gray-400 mb-2">Events</label>
+                                                <label className="block text-xs text-gray-400 mb-1">Events</label>
                                                 <Input
                                                     type="text"
                                                     value={webhook.events.join(', ')}
@@ -326,124 +326,124 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                             </div>
 
                             {/* Chats */}
-                            <div className="bg-gray-800 rounded-lg p-6">
-                                <div className="flex items-center justify-between mb-6">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <div className="bg-gray-800 rounded-lg p-4">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-6 h-6 bg-purple-500 rounded-md flex items-center justify-center">
                                             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-lg font-medium text-white">Chats</h3>
-                                        <div className="w-4 h-4 bg-gray-600 rounded-full flex items-center justify-center">
+                                        <h3 className="text-base font-medium text-white">Chats</h3>
+                                        <div className="w-3 h-3 bg-gray-600 rounded-full flex items-center justify-center">
                                             <span className="text-xs text-white">i</span>
                                         </div>
                                     </div>
-                                    <Button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
-                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <Button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md text-sm">
+                                        <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                         Filter Chats
                                     </Button>
                                 </div>
                                 
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-3 gap-3">
                                     <button
                                         type="button"
-                                        className={`flex items-center space-x-3 p-4 rounded-lg transition-colors ${
+                                        className={`flex items-center space-x-2 p-3 rounded-md transition-colors ${
                                             formData.config.ignore?.status ? 'bg-gray-700' : 'bg-gray-600'
                                         }`}
                                         onClick={() => handleInputChange('config.ignore.status', !formData.config.ignore?.status)}
                                     >
-                                        <div className="w-6 h-6 bg-green-500 rounded-full"></div>
-                                        <span className="text-white font-medium">Status: {formData.config.ignore?.status ? 'On' : 'Off'}</span>
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-white text-sm font-medium">Status: {formData.config.ignore?.status ? 'On' : 'Off'}</span>
                                     </button>
                                     <button
                                         type="button"
-                                        className={`flex items-center space-x-3 p-4 rounded-lg transition-colors ${
+                                        className={`flex items-center space-x-2 p-3 rounded-md transition-colors ${
                                             formData.config.ignore?.groups ? 'bg-gray-700' : 'bg-gray-600'
                                         }`}
                                         onClick={() => handleInputChange('config.ignore.groups', !formData.config.ignore?.groups)}
                                     >
-                                        <div className="w-6 h-6 bg-purple-500 rounded-full"></div>
-                                        <span className="text-white font-medium">Groups: {formData.config.ignore?.groups ? 'On' : 'Off'}</span>
+                                        <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+                                        <span className="text-white text-sm font-medium">Groups: {formData.config.ignore?.groups ? 'On' : 'Off'}</span>
                                     </button>
                                     <button
                                         type="button"
-                                        className={`flex items-center space-x-3 p-4 rounded-lg transition-colors ${
+                                        className={`flex items-center space-x-2 p-3 rounded-md transition-colors ${
                                             formData.config.ignore?.channels ? 'bg-gray-700' : 'bg-gray-600'
                                         }`}
                                         onClick={() => handleInputChange('config.ignore.channels', !formData.config.ignore?.channels)}
                                     >
-                                        <div className="w-6 h-6 bg-red-500 rounded-full"></div>
-                                        <span className="text-white font-medium">Channels: {formData.config.ignore?.channels ? 'On' : 'Off'}</span>
+                                        <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                                        <span className="text-white text-sm font-medium">Channels: {formData.config.ignore?.channels ? 'On' : 'Off'}</span>
                                     </button>
                                 </div>
                             </div>
 
                             {/* System Settings */}
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between p-3 bg-gray-800 rounded-md">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center">
                                             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
                                             </svg>
                                         </div>
-                                        <span className="text-white font-medium">Proxy</span>
+                                        <span className="text-white text-sm font-medium">Proxy</span>
                                     </div>
                                     <button
                                         type="button"
-                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                                        className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${
                                             formData.config.proxy ? 'bg-gray-700' : 'bg-gray-600'
                                         }`}
                                         onClick={() => handleInputChange('config.proxy', formData.config.proxy ? null : 'http://proxy:port')}
                                     >
-                                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
                                         </svg>
-                                        <span className="text-white">Proxy {formData.config.proxy ? 'On' : 'Off'}</span>
+                                        <span className="text-white text-sm">Proxy {formData.config.proxy ? 'On' : 'Off'}</span>
                                     </button>
                                 </div>
 
-                                <div className="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                                <div className="flex items-center justify-between p-3 bg-gray-800 rounded-md">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-6 h-6 bg-purple-500 rounded-md flex items-center justify-center">
                                             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
                                         </div>
-                                        <span className="text-white font-medium">Debug</span>
+                                        <span className="text-white text-sm font-medium">Debug</span>
                                     </div>
                                     <button
                                         type="button"
-                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                                        className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${
                                             formData.config.debug ? 'bg-gray-700' : 'bg-gray-600'
                                         }`}
                                         onClick={() => handleInputChange('config.debug', !formData.config.debug)}
                                     >
-                                        <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-3 h-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <span className="text-white">Debug {formData.config.debug ? 'Enabled' : 'Disabled'}</span>
+                                        <span className="text-white text-sm">Debug {formData.config.debug ? 'Enabled' : 'Disabled'}</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-end space-x-4 pt-6 border-t border-gray-700">
+                        <div className="flex justify-end space-x-3 pt-4 border-t border-gray-700">
                             <Button
                                 type="button"
                                 onClick={onClose}
-                                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg"
+                                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm"
                             >
                                 Cancelar
                             </Button>
                             <Button
                                 type="submit"
                                 disabled={loading || !formData.name.trim()}
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {loading ? 'Criando...' : 'Criar Sessão'}
                             </Button>

@@ -155,7 +155,7 @@ export default function AdminPage() {
             </div>
 
             {/* Barra de busca e botão Nova Sessão */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-2">
               <Input
                 className="w-full md:w-80"
                 placeholder="Buscar sessões..."
@@ -178,7 +178,7 @@ export default function AdminPage() {
 
             {/* Grid de Sessions (cards) */}
             {filteredSessions.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredSessions.map((session) => (
                   <SessionCard
                     key={session.id}
