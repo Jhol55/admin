@@ -9,7 +9,6 @@ import {
   HeaderSearch,
   HeaderNotification,
   HeaderUser,
-  Button,
   StatsCard,
   Input,
   SessionCard,
@@ -155,7 +154,7 @@ export default function AdminPage() {
             </div>
 
             {/* Barra de busca e botão Nova Sessão */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-2">
+            <div className="flex items-center gap-4 mb-2">
               <Input
                 className="w-full md:w-80"
                 placeholder="Buscar sessões..."
@@ -167,13 +166,13 @@ export default function AdminPage() {
                   </svg>
                 }
               />
-              <Button
-                variant="primary"
-                className="w-full md:w-auto"
+              <button
                 onClick={() => setShowCreateModal(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-md transition-colors duration-200 whitespace-nowrap"
               >
-                + Nova Sessão
-              </Button>
+                <span className="text-sm font-normal">+</span>
+                Nova Sessão
+              </button>
             </div>
 
             {/* Grid de Sessions (cards) */}
