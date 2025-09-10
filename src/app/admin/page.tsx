@@ -15,7 +15,7 @@ import {
   CreateSessionModal
 } from '@/components';
 import { useSessions } from '@/hooks/useSessions';
-import { CreateSessionData } from '@/services/waha/sessions/sessions';
+import { CreateSessionData } from '@/services/waha/sessions';
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

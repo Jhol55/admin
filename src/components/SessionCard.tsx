@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { SessionResponse } from '@/services/waha/sessions/sessions';
+import { SessionResponse } from '@/services/waha/sessions';
 import { Card, CardHeader, CardContent, StatusBadge } from './index';
 
 interface SessionCardProps {
@@ -126,7 +126,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                 </p>
                             )}
                             <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                                {session.me?.id}
+                                {session.me?.id.split('@')[0]}
                             </p>
                         </div>
                     </div>
@@ -171,6 +171,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     onClick={() => onDelete(session.name)}
                                     disabled={loading}
                                     className="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
+                                    title="Deletar sessão"
                                 >
                                     <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -186,6 +187,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                         onClick={() => onStart(session.name)}
                                         disabled={loading}
                                         className="w-9 h-9 rounded-full bg-green-500 hover:bg-green-600 active:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
+                                        title="Iniciar sessão"
                                     >
                                         <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M8 5v14l11-7z"/>
@@ -196,6 +198,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                         onClick={() => onStop(session.name)}
                                         disabled={loading}
                                         className="w-9 h-9 rounded-full bg-gray-500 hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
+                                        title="Pausar sessão"
                                     >
                                         <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M6 6h12v12H6z"/>
@@ -207,6 +210,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     onClick={() => onRestart(session.name)}
                                     disabled={loading}
                                     className="w-9 h-9 rounded-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
+                                    title="Reiniciar sessão"
                                 >
                                     <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -217,7 +221,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     onClick={() => onLogout(session.name)}
                                     disabled={loading}
                                     className="w-9 h-9 rounded-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
-                                    title="Logout da sessão"
+                                    title="Desconectar sessão"
                                 >
                                     <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -228,6 +232,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     onClick={() => onDelete(session.name)}
                                     disabled={loading}
                                     className="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg group"
+                                    title="Deletar sessão"
                                 >
                                     <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>

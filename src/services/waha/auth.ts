@@ -1,4 +1,4 @@
-import { api } from "./sessions/api";
+import { api } from "./api";
 
 export interface AuthResponse {
     qrCode: string;

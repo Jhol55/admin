@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sessionsApi } from "../../../../../../services/waha/sessions/sessions";
+import { sessionsApi } from "../../../../../../services/waha/sessions";
 
 // POST - Logout da sessão
 export async function POST(

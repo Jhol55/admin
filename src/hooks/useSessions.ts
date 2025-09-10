@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { SessionResponse, CreateSessionData } from '@/services/waha/sessions/sessions';
+import { SessionResponse, CreateSessionData } from '@/services/waha/sessions';
 
 interface UseSessionsReturn {
     sessions: SessionResponse[];

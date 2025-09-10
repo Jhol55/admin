@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sessionsApi, CreateSessionData } from "../../../../services/waha/sessions/sessions";
+import { sessionsApi, CreateSessionData } from "../../../../services/waha/sessions";
 
 // GET - Listar sessões
 export async function GET() {

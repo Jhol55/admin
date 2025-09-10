@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CreateSessionData } from '@/services/waha/sessions/sessions';
+import { CreateSessionData } from '@/services/waha/sessions';
 import { Button } from './Button';
 import { Input } from './Input';
 

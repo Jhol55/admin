@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useSessions } from '@/hooks/useSessions';
-import { CreateSessionData } from '@/services/waha/sessions/sessions';
+import { CreateSessionData } from '@/services/waha/sessions';
 import { Button, Card, CardHeader, CardContent, Input, StatusBadge } from './index';
 
 export const SessionsManager: React.FC = () => {

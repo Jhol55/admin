@@ -1,4 +1,4 @@
-import { Api } from "../../api";
+import { Api } from "../api";
 
 
 // Para uso no servidor (API routes)

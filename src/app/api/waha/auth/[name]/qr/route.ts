@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authApi } from "../../../../../../services/waha/auth/auth";
+import { authApi } from "../../../../../../services/waha/auth";
 
 // GET - Obter QR Code da sessão
 export async function GET(
