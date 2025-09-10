@@ -4,10 +4,7 @@ export interface CreateSessionData {
     name: string;
     start: boolean;
     config: {
-        metadata?: {
-            'user.id'?: string;
-            'user.email'?: string;
-        };
+        metadata?: Record<string, string>;
         proxy?: string | null;
         debug?: boolean;
         ignore?: {

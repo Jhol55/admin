@@ -53,17 +53,17 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
         onCreateSession(formData);
     };
 
-    const handleInputChange = (path: string, value: any) => {
+    const handleInputChange = (path: string, value: string | boolean | null | string[]) => {
         setFormData(prev => {
             const newData = { ...prev };
             const keys = path.split('.');
-            let current: any = newData;
+            let current: Record<string, unknown> = newData;
             
             for (let i = 0; i < keys.length - 1; i++) {
                 if (!current[keys[i]]) {
                     current[keys[i]] = {};
                 }
-                current = current[keys[i]];
+                current = current[keys[i]] as Record<string, unknown>;
             }
             
             current[keys[keys.length - 1]] = value;
@@ -218,7 +218,7 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                 </div>
                                 
                                 <div className="space-y-3">
-                                    {Object.entries(formData.config.metadata || {}).map(([key, value], index) => (
+                                    {Object.entries(formData.config.metadata || {}).map(([key, value]) => (
                                         <div key={key} className="grid grid-cols-12 gap-4 items-end">
                                             <div className="col-span-5">
                                                 <label className="block text-sm text-gray-400 mb-2">Key</label>
@@ -257,7 +257,7 @@ export const CreateSessionModal: React.FC<CreateSessionModalProps> = ({
                                     
                                     {Object.keys(formData.config.metadata || {}).length === 0 && (
                                         <div className="text-center text-gray-500 py-4">
-                                            Nenhum metadata adicionado. Clique em "+ Metadata" para adicionar.
+                                            {`Nenhum metadata adicionado. Clique em "+ Metadata" para adicionar.`}
                                         </div>
                                     )}
                                 </div>
