@@ -12,14 +12,17 @@ import {
   Button,
   StatsCard,
   Input,
-  SessionCard
+  SessionCard,
+  CreateSessionModal
 } from '@/components';
 import { useSessions } from '@/hooks/useSessions';
+import { CreateSessionData } from '@/services/waha/sessions/sessions';
 
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const { sessions, loading, startSession, stopSession, restartSession, logoutSession, deleteSession, getQRCode } = useSessions();
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const { sessions, loading, createSession, startSession, stopSession, restartSession, logoutSession, deleteSession, getQRCode } = useSessions();
 
   // Filtro de sessões por nome
   const filteredSessions = useMemo(() => {
@@ -28,6 +31,16 @@ export default function AdminPage() {
       (s?.name || '').toLowerCase().includes(searchValue.toLowerCase())
     );
   }, [sessions, searchValue]);
+
+  // Função para criar nova sessão
+  const handleCreateSession = async (data: CreateSessionData) => {
+    try {
+      await createSession(data);
+      setShowCreateModal(false);
+    } catch (error) {
+      console.error('Erro ao criar sessão:', error);
+    }
+  };
 
   const handleSearch = (value: string) => {
     console.log('Search:', value);
@@ -157,7 +170,7 @@ export default function AdminPage() {
               <Button
                 variant="primary"
                 className="w-full md:w-auto"
-                onClick={() => {/* abrir modal/criar sessão futuramente */}}
+                onClick={() => setShowCreateModal(true)}
               >
                 + Nova Sessão
               </Button>
@@ -188,6 +201,14 @@ export default function AdminPage() {
           </div>
         </main>
       </div>
+
+      {/* Modal de Criação de Sessão */}
+      <CreateSessionModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onCreateSession={handleCreateSession}
+        loading={loading}
+      />
     </div>
   );
 }

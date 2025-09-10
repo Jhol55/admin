@@ -2,8 +2,36 @@ import { api } from "./api";
 
 export interface CreateSessionData {
     name: string;
-    webhook?: string;
-    config?: Record<string, unknown>;
+    start: boolean;
+    config: {
+        metadata?: {
+            'user.id'?: string;
+            'user.email'?: string;
+        };
+        proxy?: string | null;
+        debug?: boolean;
+        ignore?: {
+            status?: string | null;
+            groups?: string | null;
+            channels?: string | null;
+        };
+        noweb?: {
+            store?: {
+                enabled?: boolean;
+                fullSync?: boolean;
+            };
+        };
+        webjs?: {
+            tagsEventsOn?: boolean;
+        };
+        webhooks?: Array<{
+            url: string;
+            events: string[];
+            hmac?: string | null;
+            retries?: number | null;
+            customHeaders?: Record<string, string> | null;
+        }>;
+    };
 }
 
 export interface SessionResponse {

@@ -45,3 +45,6 @@ export { default as SessionsManager } from './SessionsManager';
 
 // Session Card
 export { default as SessionCard } from './SessionCard';
+
+// Create Session Modal
+export { default as CreateSessionModal } from './CreateSessionModal';
