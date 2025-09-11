@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { SessionResponse } from '@/services/waha/sessions';
+import { ProfileResponse } from '@/services/waha/profile';
 import { Card, CardHeader, CardContent, StatusBadge } from './index';
 
 interface SessionCardProps {
@@ -29,6 +30,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({
     const [qrCode, setQrCode] = useState<string | null>(null);
     const [qrLoading, setQrLoading] = useState(false);
     const [showQRModal, setShowQRModal] = useState(false);
+    const [profilePicture, setProfilePicture] = useState<string | null>(null);
+    const [profileLoading, setProfileLoading] = useState(false);
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -48,6 +51,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
     };
 
     const handleShowQR = async () => {
+        // Se já tem QR code, apenas abrir modal
         if (qrCode) {
             setShowQRModal(true);
             return;
@@ -95,6 +99,61 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         }
     };
 
+    const handleRefreshQR = async () => {
+        // Limpar QR code atual e gerar novo
+        setQrCode(null);
+        setQrLoading(true);
+        
+        try {
+            // Fetch direto com cache desabilitado
+            const response = await fetch(`/api/waha/auth/${session.name}/qr`, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch QR code');
+            }
+            
+            // A API retorna uma imagem PNG diretamente, não JSON
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+            setQrCode(imageUrl);
+        } catch (error) {
+            console.error('Error refreshing QR code:', error);
+        } finally {
+            setQrLoading(false);
+        }
+    };
+
+    const fetchProfile = useCallback(async () => {
+        if (!session.me?.id) return;
+        
+        setProfileLoading(true);
+        try {
+            const response = await fetch(`/api/waha/profile/${session.name}`);
+            if (response.ok) {
+                const profile: ProfileResponse = await response.json();
+                if (profile.picture) {
+                    setProfilePicture(profile.picture);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        } finally {
+            setProfileLoading(false);
+        }
+    }, [session.me?.id, session.name]);
+
+    useEffect(() => {
+        if (session.me?.id && session.status === 'WORKING') {
+            fetchProfile();
+        }
+    }, [session.me?.id, session.status, fetchProfile]);
+
     return (
         <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="pb-1">
@@ -110,10 +169,26 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                 <div className="space-y-2">
                     {/* Ícone, PushName e Número */}
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
+                        <div className="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
+                            {profileLoading ? (
+                                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                                </div>
+                            ) : profilePicture ? (
+                                <Image
+                                    src={profilePicture}
+                                    alt="Profile"
+                                    width={32}
+                                    height={32}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                </div>
+                            )}
                         </div>
                         <div className="flex-1 min-w-0">
                             {session.me?.pushName ? (
@@ -253,14 +328,31 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                                 {session.name}
                             </h3>
-                            <button
-                                onClick={() => setShowQRModal(false)}
-                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={handleRefreshQR}
+                                    disabled={qrLoading}
+                                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white text-xs font-medium rounded-md transition-colors duration-200"
+                                    title="Atualizar QR Code"
+                                >
+                                    {qrLoading ? (
+                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                    ) : (
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    )}
+                                    Atualizar
+                                </button>
+                                <button
+                                    onClick={() => setShowQRModal(false)}
+                                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         
                         {qrCode ? (

@@ -283,7 +283,13 @@ export const useSessions = (): UseSessionsReturn => {
 
     const getQRCode = useCallback(async (name: string): Promise<string | null> => {
         try {
-            const response = await fetch(`/api/waha/auth/${name}/qr`);
+            const response = await fetch(`/api/waha/auth/${name}/qr`, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            });
             
             if (!response.ok) {
                 throw new Error('Failed to fetch QR code');
