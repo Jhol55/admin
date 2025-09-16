@@ -12,7 +12,7 @@ export default function RootLayout({
   const handleMenuToggle = () => setSidebarOpen(!sidebarOpen);
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen">
       <Sidebar isOpen={sidebarOpen} onToggle={handleMenuToggle}>
         <SidebarItem
           icon={

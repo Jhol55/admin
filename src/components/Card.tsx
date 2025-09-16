@@ -48,11 +48,11 @@ export const Card: React.FC<CardProps> = ({
     lg: 'shadow-lg'
   };
 
-  const borderClasses = border ? 'border border-gray-200 dark:border-gray-700' : '';
+  const borderClasses = border ? 'border border-[var(--card-border)]' : '';
   const hoverClasses = hover ? 'hover:shadow-md transition-shadow duration-200' : '';
 
   const classes = `
-    bg-white dark:bg-gray-900 rounded-lg
+    bg-[var(--card-bg)] rounded-[var(--card-radius)]
     ${paddingClasses[padding]}
     ${shadowClasses[shadow]}
     ${borderClasses}
@@ -72,7 +72,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`border-b border-gray-200 dark:border-gray-700 pb-4 mb-4 ${className}`}>
+    <div className={`border-b border-[var(--card-border)] pb-4 mb-4 ${className}`}>
       {children}
     </div>
   );
@@ -94,7 +94,7 @@ export const CardFooter: React.FC<CardFooterProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 ${className}`}>
+    <div className={`border-t border-[var(--card-border)] pt-4 mt-4 ${className}`}>
       {children}
     </div>
   );
@@ -120,19 +120,19 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   className = ''
 }) => {
   const changeClasses = {
-    increase: 'text-green-600 dark:text-green-400',
-    decrease: 'text-red-600 dark:text-red-400',
-    neutral: 'text-gray-600 dark:text-gray-400'
+    increase: 'text-green-600',
+    decrease: 'text-red-600',
+    neutral: 'text-gray-600'
   };
 
   return (
     <Card className={className}>
       <div className="flex items-center justify-between">
         <div className="flex-1">
-          <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+          <p className="text-xs font-medium text-gray-600">
             {title}
           </p>
-          <p className="text-lg font-bold text-gray-900 dark:text-white">
+          <p className="text-lg font-bold text-[var(--foreground)]">
             {value}
           </p>
           {change && (
@@ -145,7 +145,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({
           )}
         </div>
         {icon && (
-          <div className="flex-shrink-0 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-md">
+          <div className="flex-shrink-0 p-2 bg-indigo-50 rounded-md">
             {icon}
           </div>
         )}
@@ -174,15 +174,15 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
     <Card hover className={className}>
       <div className="flex items-start gap-4">
         {icon && (
-          <div className="flex-shrink-0 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+          <div className="flex-shrink-0 p-2 bg-indigo-50 rounded-lg">
             {icon}
           </div>
         )}
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
             {title}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600">
             {description}
           </p>
         </div>

@@ -51,18 +51,18 @@ export const Input: React.FC<InputProps> = ({
   };
 
   const variantClasses = {
-    default: 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600',
-    filled: 'bg-gray-50 dark:bg-gray-800 border-transparent'
+    default: 'bg-[var(--input-bg)] border-[var(--input-border)]',
+    filled: 'bg-[var(--card-bg)] border-transparent'
   };
 
   const baseClasses = `
-    block w-full rounded-lg border transition-colors duration-200
-    placeholder-gray-400 dark:placeholder-gray-500
-    focus:outline-none focus:border-gray-200 dark:focus:border-gray-400
+    block w-full rounded-[var(--input-radius)] border transition-colors duration-200
+    placeholder-gray-400
+    focus:outline-none focus:border-[var(--primary)] focus:ring-[var(--primary)]
     disabled:opacity-50 disabled:cursor-not-allowed
     ${sizeClasses[size]}
     ${variantClasses[variant]}
-    ${error ? 'border-red-300 dark:border-red-600 focus:ring-red-500' : ''}
+    ${error ? 'border-red-300 focus:ring-red-500' : ''}
     ${leftIcon ? 'pl-10' : ''}
     ${rightIcon ? 'pr-10' : ''}
     ${className}
@@ -71,7 +71,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-1">
           {label}
         </label>
       )}
@@ -101,13 +101,13 @@ export const Input: React.FC<InputProps> = ({
       </div>
       
       {error && (
-        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+        <p className="mt-1 text-sm text-red-600">
           {error}
         </p>
       )}
       
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-500">
           {helperText}
         </p>
       )}

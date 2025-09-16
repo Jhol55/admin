@@ -26,7 +26,6 @@ export {
 export { 
   default as Header, 
   HeaderActions, 
-  HeaderSearch, 
   HeaderNotification, 
   HeaderUser 
 } from './Header';

@@ -4,13 +4,13 @@ import React, { useState, useMemo } from 'react';
 import {
   Header,
   HeaderActions,
-  HeaderSearch,
   HeaderNotification,
   HeaderUser,
   StatsCard,
   Input,
   SessionCard,
-  CreateSessionModal
+  CreateSessionModal,
+  Button
 } from '@/components';
 import { useSessions } from '@/hooks/useSessions';
 import { CreateSessionData } from '@/services/waha/sessions';
@@ -52,13 +52,6 @@ export default function AdminPage() {
         showMenuButton={true}
       >
         <HeaderActions>
-          <HeaderSearch
-            placeholder="Search..."
-            value={searchValue}
-            onChange={setSearchValue}
-            onSearch={handleSearch}
-            className="w-64"
-          />
           <HeaderNotification count={3} />
           <HeaderUser
             name="Admin User"
@@ -126,13 +119,13 @@ export default function AdminPage() {
                 </svg>
               }
             />
-            <button
+            <Button
               onClick={() => setShowCreateModal(true)}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-md transition-colors duration-200 whitespace-nowrap"
             >
               <span className="text-sm font-normal">+</span>
               Nova Sessão
-            </button>
+            </Button>
           </div>
 
           {/* Grid de Sessions (cards) */}

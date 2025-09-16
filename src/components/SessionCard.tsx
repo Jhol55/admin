@@ -158,7 +158,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="pb-1">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">
+                    <h3 className="text-base font-semibold text-[var(--foreground)] truncate">
                         {session.name}
                     </h3>
                     {getStatusBadge(session.status)}
@@ -171,7 +171,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                     <div className="flex items-center gap-2">
                         <div className="w-9 h-9 rounded-full flex items-center justify-center overflow-hidden">
                             {profileLoading ? (
-                                <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
                                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
                                 </div>
                             ) : profilePicture ? (
@@ -183,7 +183,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                <div className="w-full h-full bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                <div className="w-full h-full bg-gradient-to-br from-green-400 to-blue-400 rounded-lg flex items-center justify-center">
                                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                     </svg>
@@ -192,15 +192,15 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                         </div>
                         <div className="flex-1 min-w-0">
                             {session.me?.pushName ? (
-                                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                <p className="text-sm font-medium text-[var(--foreground)] truncate">
                                     {session.me.pushName}
                                 </p>
                             ) : (
-                                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                                <p className="text-xs font-medium text-gray-500">
                                     Número não conectado
                                 </p>
                             )}
-                            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                            <p className="text-xs text-gray-500 truncate">
                                 {session.me?.id.split('@')[0]}
                             </p>
                         </div>
@@ -209,8 +209,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                     {/* Webhook */}
                     {session.webhook && (
                         <div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Webhook</p>
-                            <p className="text-sm font-mono bg-gray-100 dark:bg-gray-800 p-2 rounded text-gray-700 dark:text-gray-300 break-all">
+                            <p className="text-sm text-gray-500 mb-1">Webhook</p>
+                            <p className="text-sm font-mono bg-gray-100 p-2 rounded text-gray-700 break-all">
                                 {session.webhook}
                             </p>
                         </div>
@@ -222,7 +222,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
                             // Quando está iniciando - mostrar loading
                             <div className="flex items-center justify-center gap-2">
                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-                                <span className="text-xs text-gray-600 dark:text-gray-400">Iniciando...</span>
+                                <span className="text-xs text-gray-600">Iniciando...</span>
                             </div>
                         ) : !session.me ? (
                             // Quando não há 'me' e não está iniciando - apenas QR Code e Deletar

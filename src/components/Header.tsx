@@ -16,14 +16,6 @@ interface HeaderActionsProps {
   className?: string;
 }
 
-interface HeaderSearchProps {
-  placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-  onSearch?: (value: string) => void;
-  className?: string;
-}
-
 interface HeaderUserProps {
   name?: string;
   email?: string;
@@ -46,42 +38,6 @@ export const HeaderActions: React.FC<HeaderActionsProps> = ({
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {children}
-    </div>
-  );
-};
-
-export const HeaderSearch: React.FC<HeaderSearchProps> = ({
-  placeholder = "Search...",
-  value = "",
-  onChange,
-  onSearch,
-  className = ''
-}) => {
-  const searchIcon = (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-  );
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && onSearch) {
-      onSearch(e.currentTarget.value);
-    }
-  };
-
-  return (
-    <div className={`relative ${className}`}>
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        {searchIcon}
-      </div>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        onKeyPress={handleKeyPress}
-        className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
     </div>
   );
 };
@@ -207,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
   );
 
   return (
-    <header className={`bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 py-4 lg:px-6 ${className}`}>
+    <header className={`bg-[var(--card-bg)] border-b border-[var(--card-border)] shadow-[var(--shadow-sm)] px-8 py-6 ${className}`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {showMenuButton && (
@@ -221,11 +177,11 @@ export const Header: React.FC<HeaderProps> = ({
           
           {title && (
             <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h1 className="text-2xl font-bold text-[var(--foreground)]">
                 {title}
               </h1>
               {subtitle && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-base text-[var(--muted)] font-normal">
                   {subtitle}
                 </p>
               )}

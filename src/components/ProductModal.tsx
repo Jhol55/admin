@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@/components';
+import Image from 'next/image';
 
 export type ProductForm = {
   nome: string;
@@ -11,6 +12,10 @@ export type ProductForm = {
   largura: string;
   altura: string;
   quantidadeUnidade: string;
+  pesoMin?: string;
+  pesoMax?: string;
+  imagemCardapio?: File | null;
+  imagemTabelaNutricional?: File | null;
 };
 
 export type ProductModalProps = {
@@ -32,6 +37,7 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
     altura: '',
     quantidadeUnidade: '',
   });
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -44,36 +50,31 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
     { key: 'variacoes', label: 'Variações', optional: true },
   ];
 
-  const stepperActiveColor = 'bg-green-600 border-green-600 text-white';
-  const stepperInactiveColor = 'bg-gray-50 dark:bg-gray-200 border-gray-300 text-gray-400';
-  const stepperTextActive = 'text-green-600';
-  const stepperTextInactive = 'text-gray-500 dark:text-gray-400';
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xl max-w-5xl w-full h-screen max-h-[80vh] overflow-hidden flex flex-col relative bg-gray-50 dark:bg-gray-900">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+      <div className="rounded-[var(--card-radius)] border border-[var(--card-border)] shadow-[var(--card-shadow)] max-w-5xl w-full h-screen max-h-[80vh] overflow-hidden flex flex-col relative bg-[var(--card-bg)]">
         {/* Botão de fechar no canto superior direito */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Fechar"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900 dark:hover:text-red-400 transition-colors shadow focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-red-100 hover:text-red-600 transition-colors shadow focus:outline-none"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <div className="p-0 flex rounded-lg flex-row h-full">
+        <div className="p-0 flex rounded-[var(--card-radius)] flex-row h-full">
           {/* Stepper vertical */}
-          <div className="w-56 bg-gray-50 dark:bg-gray-900 border-r border-gray-700 flex flex-col py-4 px-4">
-            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Etapas do cadastro</h3>
-            <p className="text-xs text-gray-500 mb-5">Navegue entre as etapas do cadastro</p>
+          <div className="w-56 bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)] flex flex-col py-4 px-4">
+            <h3 className="text-base font-semibold text-[var(--foreground)] mb-1">Etapas do cadastro</h3>
+            <p className="text-xs text-[var(--muted)] mb-5">Navegue entre as etapas do cadastro</p>
             <ol className="space-y-2 relative">
               {steps.map((step, idx) => (
                 <li key={step.key} className="flex items-start group">
                   <div className="flex flex-col items-center mr-3">
-                    <span className={`flex text-gray-600 items-center justify-center w-6 h-6 rounded-full border text-xs font-bold transition-colors duration-200
-                      ${tab === step.key ? stepperActiveColor : stepperInactiveColor}
+                    <span className={`flex items-center justify-center w-6 h-6 rounded-full border text-xs font-bold transition-colors duration-200
+                      ${tab === step.key ? 'bg-[var(--primary)] border-[var(--primary)] text-white' : 'bg-gray-100 border-gray-300 text-gray-400'}
                     `}>
                       {idx + 1}
                     </span>
@@ -84,7 +85,7 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
                   <button
                     type="button"
                     className={`text-left py-1 focus:outline-none transition-colors duration-200 text-xs
-                      ${tab === step.key ? stepperTextActive + ' font-semibold' : stepperTextInactive + ' hover:text-green-600'}
+                      ${tab === step.key ? 'text-[var(--primary)] font-semibold' : 'text-gray-500 hover:text-[var(--primary)]'}
                     `}
                     onClick={() => setTab(step.key as typeof tab)}
                   >
@@ -96,9 +97,9 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
             </ol>
           </div>
           {/* Conteúdo do formulário */}
-          <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-900 pt-12">
-            <div className="p-4 flex items-center justify-between border-gray-200 dark:border-gray-700">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-0">Incluir produto</h2>
+          <div className="flex-1 flex flex-col bg-[var(--card-bg)] pt-12">
+            <div className="p-4 flex items-center justify-between border-b border-[var(--card-border)]">
+              <h2 className="text-lg font-bold text-[var(--foreground)] mb-0">Incluir produto</h2>
               <span className="text-xs text-red-500 whitespace-nowrap">(*) Campos obrigatórios</span>
             </div>
             <form className="flex-1 overflow-y-auto px-4 py-4" onSubmit={e => { e.preventDefault(); onSave(form); }}>
@@ -106,26 +107,26 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
                 <div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">
                         Nome <span className="text-red-500">*</span>
                       </label>
-                      <Input value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} required className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <Input value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} required className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">
                         Código (SKU)
                       </label>
-                      <Input value={form.codigo} onChange={e => setForm(f => ({ ...f, codigo: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <Input value={form.codigo} onChange={e => setForm(f => ({ ...f, codigo: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">
                        Valor de venda 
                       </label>
-                      <Input type="number" value={form.valor} onChange={e => setForm(f => ({ ...f, valor: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <Input type="number" value={form.valor} onChange={e => setForm(f => ({ ...f, valor: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1 whitespace-nowrap">Valor Promocional</label>
-                      <Input type="number" value={form.valorPromocional} onChange={e => setForm(f => ({ ...f, valorPromocional: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1 whitespace-nowrap">Valor Promocional</label>
+                      <Input type="number" value={form.valorPromocional} onChange={e => setForm(f => ({ ...f, valorPromocional: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                   </div>
                 </div>
@@ -133,38 +134,114 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
               {tab === 'caracteristicas' && (
                 <div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Peso</label>
-                      <Input type="number" value={form.peso} onChange={e => setForm(f => ({ ...f, peso: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                    <div className="col-span-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Peso mínimo (g) / unidade</label>
+                      <Input type="number" value={form.pesoMin || ''} onChange={e => setForm(f => ({ ...f, pesoMin: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" placeholder="Ex: 200" />
+                    </div>
+                    <div className="col-span-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Peso máximo (g) / unidade</label>
+                      <Input type="number" value={form.pesoMax || ''} onChange={e => setForm(f => ({ ...f, pesoMax: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" placeholder="Ex: 500" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Comprimento</label>
-                      <Input type="number" value={form.comprimento} onChange={e => setForm(f => ({ ...f, comprimento: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Comprimento</label>
+                      <Input type="number" value={form.comprimento} onChange={e => setForm(f => ({ ...f, comprimento: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Largura</label>
-                      <Input type="number" value={form.largura} onChange={e => setForm(f => ({ ...f, largura: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Largura</label>
+                      <Input type="number" value={form.largura} onChange={e => setForm(f => ({ ...f, largura: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Altura</label>
-                      <Input type="number" value={form.altura} onChange={e => setForm(f => ({ ...f, altura: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Altura</label>
+                      <Input type="number" value={form.altura} onChange={e => setForm(f => ({ ...f, altura: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div className="sm:col-span-2 lg:col-span-1">
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1 whitespace-nowrap">Quantidade / Unidade</label>
-                      <Input type="number" value={form.quantidadeUnidade} onChange={e => setForm(f => ({ ...f, quantidadeUnidade: e.target.value }))} className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-1.5 text-xs rounded-md focus:border-green-600 focus:ring-green-600" />
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-1 whitespace-nowrap">Quantidade / unidade</label>
+                      <Input type="number" value={form.quantidadeUnidade} onChange={e => setForm(f => ({ ...f, quantidadeUnidade: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
+                    </div>
+                  </div>
+                </div>
+              )}
+              {tab === 'imagens' && (
+                <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div className="flex flex-col gap-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-0">Imagem do cardápio</label>
+                      <div className="relative flex items-center gap-3">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={e => {
+                            const file = e.target.files?.[0] || null;
+                            setForm(f => ({ ...f, imagemCardapio: file }));
+                          }}
+                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:text-white hover:file:bg-[var(--primary-hover)]"
+                        />
+                        {form.imagemCardapio ? (
+                          <>
+                            <Image
+                              src={form.imagemCardapio ? URL.createObjectURL(form.imagemCardapio as File) : ''}
+                              alt="Preview imagem cardápio"
+                              width={64}
+                              height={64}
+                              className="w-16 h-16 absolute right-0 object-cover rounded-lg border border-[var(--input-border)] shadow-md bg-gray-100 transition-transform duration-200 hover:scale-110 cursor-pointer"
+                              onClick={() => form.imagemCardapio && setPreviewUrl(URL.createObjectURL(form.imagemCardapio as File))}
+                            />
+                            <div className="ml-2 w-16 rounded-lg" />
+                          </>
+                        ) : (
+                          <div className="w-16 rounded-lg" />
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="block text-xs font-medium text-[var(--foreground)] mb-0">Imagem da tabela nutricional</label>
+                      <div className="relative flex items-center gap-3">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={e => {
+                            const file = e.target.files?.[0] || null;
+                            setForm(f => ({ ...f, imagemTabelaNutricional: file }));
+                          }}
+                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:text-white hover:file:bg-[var(--primary-hover)]"
+                        />
+                        {form.imagemTabelaNutricional ? (
+                          <>
+                            <Image
+                              src={form.imagemTabelaNutricional ? URL.createObjectURL(form.imagemTabelaNutricional as File) : ''}
+                              alt="Preview tabela nutricional"
+                              width={64}
+                              height={64}
+                              className="w-16 h-16 absolute right-0 object-cover rounded-lg border border-[var(--input-border)] shadow-md bg-gray-100 transition-transform duration-200 hover:scale-110 cursor-pointer"
+                              onClick={() => form.imagemTabelaNutricional && setPreviewUrl(URL.createObjectURL(form.imagemTabelaNutricional as File))}
+                            />
+                            <div className="ml-2 w-16 rounded-lg" />
+                          </>
+                        ) : (
+                          <div className="w-16 rounded-lg" />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
               {/* Futuras etapas podem ser adicionadas aqui */}
-              <div className="flex justify-between items-center bg-transparent p-0 mt-6">
-                <Button type="button" onClick={onClose} className="border border-red-600 bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 px-6 py-1.5 rounded-md text-xs font-semibold">Cancelar</Button>
+              <div className="flex justify-between items-center bg-transparent p-0 mt-10">
+                <Button type="button" variant="danger" onClick={onClose} className="px-6 py-1.5 rounded-md text-xs font-semibold">Cancelar</Button>
                 <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-6 py-1.5 rounded-md text-xs font-semibold">Avançar</Button>
               </div>
             </form>
           </div>
         </div>
       </div>
+      {/* Modal de preview da imagem */}
+      {previewUrl && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70" onClick={() => setPreviewUrl(null)}>
+          <div className="relative w-full max-w-2xl max-h-[80vh] flex items-center justify-center">
+            <Image src={previewUrl} alt="Preview grande" width={600} height={600} style={{objectFit: 'contain', width: '100%', height: 'auto', maxHeight: '80vh'}} className="rounded-lg shadow-2xl border-4 border-white" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

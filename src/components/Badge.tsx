@@ -34,12 +34,12 @@ export const Badge: React.FC<BadgeProps> = ({
   const baseClasses = "inline-flex items-center font-medium";
   
   const variantClasses = {
-    default: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
-    primary: "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400",
-    success: "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400",
-    warning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400",
-    danger: "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400",
-    info: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/20 dark:text-cyan-400"
+    default: "bg-gray-100 text-gray-800",
+    primary: "bg-indigo-100 text-indigo-700",
+    success: "bg-green-100 text-green-700",
+    warning: "bg-yellow-100 text-yellow-700",
+    danger: "bg-red-100 text-red-700",
+    info: "bg-cyan-100 text-cyan-700"
   };
 
   const sizeClasses = {
@@ -68,32 +68,32 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   const statusConfig = {
     active: {
       label: 'Ativo',
-      classes: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
+      classes: 'bg-green-100 text-green-700',
       dotClasses: 'bg-green-400'
     },
     inactive: {
       label: 'Inativo',
-      classes: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+      classes: 'bg-gray-100 text-gray-800',
       dotClasses: 'bg-gray-400'
     },
     pending: {
       label: 'Pendente',
-      classes: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400',
+      classes: 'bg-yellow-100 text-yellow-700',
       dotClasses: 'bg-yellow-400'
     },
     completed: {
       label: 'Concluído',
-      classes: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
+      classes: 'bg-green-100 text-green-700',
       dotClasses: 'bg-green-400'
     },
     failed: {
       label: 'Falhou',
-      classes: 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400',
+      classes: 'bg-red-100 text-red-700',
       dotClasses: 'bg-red-400'
     },
     warning: {
       label: 'Aviso',
-      classes: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400',
+      classes: 'bg-orange-100 text-orange-700',
       dotClasses: 'bg-orange-400'
     }
   };
@@ -168,13 +168,13 @@ export const IconBadge: React.FC<IconBadgeProps> = ({
 }) => {
   const baseClasses = "inline-flex items-center justify-center";
   
-  const variantClasses = {
-    default: "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400",
-    primary: "bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400",
-    success: "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400",
-    warning: "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400",
-    danger: "bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400",
-    info: "bg-cyan-100 text-cyan-600 dark:bg-cyan-900/20 dark:text-cyan-400"
+  const variantClassesIcon = {
+    default: "bg-gray-100 text-gray-600",
+    primary: "bg-indigo-100 text-indigo-600",
+    success: "bg-green-100 text-green-600",
+    warning: "bg-yellow-100 text-yellow-600",
+    danger: "bg-red-100 text-red-600",
+    info: "bg-cyan-100 text-cyan-600"
   };
 
   const sizeClasses = {
@@ -185,7 +185,7 @@ export const IconBadge: React.FC<IconBadgeProps> = ({
 
   const roundedClasses = rounded ? "rounded-full" : "rounded-md";
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${roundedClasses} ${className}`;
+  const classes = `${baseClasses} ${variantClassesIcon[variant]} ${sizeClasses[size]} ${roundedClasses} ${className}`;
 
   return (
     <span className={classes}>
@@ -229,14 +229,14 @@ export const ProgressBadge: React.FC<ProgressBadgeProps> = ({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className={`${sizeClasses[size]} bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden`}>
+      <div className={`${sizeClasses[size]} bg-gray-200 rounded-full overflow-hidden`}>
         <div
           className={`h-full ${getProgressColor(progress)} transition-all duration-300 ease-out`}
           style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
         />
       </div>
       {showPercentage && (
-        <span className={`font-medium text-gray-700 dark:text-gray-300 ${textSizeClasses[size]}`}>
+        <span className={`font-medium text-gray-700 ${textSizeClasses[size]}`}>
           {Math.round(progress)}%
         </span>
       )}
