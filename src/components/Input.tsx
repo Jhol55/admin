@@ -58,7 +58,7 @@ export const Input: React.FC<InputProps> = ({
   const baseClasses = `
     block w-full rounded-lg border transition-colors duration-200
     placeholder-gray-400 dark:placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+    focus:outline-none focus:border-gray-200 dark:focus:border-gray-400
     disabled:opacity-50 disabled:cursor-not-allowed
     ${sizeClasses[size]}
     ${variantClasses[variant]}
@@ -141,7 +141,7 @@ export const Textarea: React.FC<TextareaProps> = ({
   const baseClasses = `
     block w-full rounded-lg border transition-colors duration-200
     placeholder-gray-400 dark:placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+    focus:outline-none focus:ring-2 focus:border-green-400 focus:ring-green-400
     disabled:opacity-50 disabled:cursor-not-allowed resize-vertical
     ${sizeClasses[size]}
     ${variantClasses[variant]}
@@ -205,7 +205,7 @@ export const Select: React.FC<SelectProps> = ({
 
   const baseClasses = `
     block w-full rounded-lg border transition-colors duration-200
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+    focus:outline-none focus:ring-2 focus:border-green-400 focus:ring-green-400
     disabled:opacity-50 disabled:cursor-not-allowed
     ${sizeClasses[size]}
     ${variantClasses[variant]}
