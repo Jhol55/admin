@@ -47,3 +47,6 @@ export { default as SessionCard } from './SessionCard';
 
 // Create Session Modal
 export { default as CreateSessionModal } from './CreateSessionModal';
+
+// Frying Pan Loading
+export { default as FryingPanLoading } from './FryingPanLoading';

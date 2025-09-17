@@ -26,10 +26,13 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   onClick,
   badge
 }) => {
-  const baseClasses = "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-50";
+  const baseClasses = isActive
+    ? "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-white"
+    : "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-50";
   const activeClasses = isActive 
-    ? "bg-purple-100 text-[var(--primary)]" 
+    ? "bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white" 
     : "text-gray-700";
+    //bg-[var(--primary)] hover:bg-[var(--primary-hover)]
 
   const content = (
     <>

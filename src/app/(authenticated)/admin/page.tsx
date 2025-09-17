@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Header,
   HeaderActions,
@@ -10,7 +10,8 @@ import {
   Input,
   SessionCard,
   CreateSessionModal,
-  Button
+  Button,
+  FryingPanLoading
 } from '@/components';
 import { useSessions } from '@/hooks/useSessions';
 import { CreateSessionData } from '@/services/waha/sessions';
@@ -18,7 +19,8 @@ import { CreateSessionData } from '@/services/waha/sessions';
 export default function AdminPage() {
   const [searchValue, setSearchValue] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const { sessions, loading, createSession, startSession, stopSession, restartSession, logoutSession, deleteSession, getQRCode } = useSessions();
+  const [showLoadingAnimation, setShowLoadingAnimation] = useState(true);
+  const { sessions, loading, error, createSession, startSession, stopSession, restartSession, logoutSession, deleteSession, getQRCode } = useSessions();
 
   // Filtro de sessões por nome
   const filteredSessions = useMemo(() => {
@@ -27,6 +29,21 @@ export default function AdminPage() {
       (s?.name || '').toLowerCase().includes(searchValue.toLowerCase())
     );
   }, [sessions, searchValue]);
+
+  // Controlar o timing da animação de loading
+  useEffect(() => {
+    if (loading) {
+      // Se está carregando, mostrar animação
+      setShowLoadingAnimation(true);
+    } else if (!loading) {
+      // Quando terminar de carregar, aguardar 3 segundos antes de esconder a animação
+      const timer = setTimeout(() => {
+        setShowLoadingAnimation(false);
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   // Função para criar nova sessão
   const handleCreateSession = async (data: CreateSessionData) => {
@@ -38,9 +55,6 @@ export default function AdminPage() {
     }
   };
 
-  const handleSearch = (value: string) => {
-    console.log('Search:', value);
-  };
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
@@ -106,6 +120,19 @@ export default function AdminPage() {
             />
           </div>
 
+          {/* Error Display */}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+                <p className="text-red-800 dark:text-red-400 font-medium">Erro ao carregar sessões:</p>
+              </div>
+              <p className="text-red-700 dark:text-red-300 mt-1">{error}</p>
+            </div>
+          )}
+
           {/* Barra de busca e botão Nova Sessão */}
           <div className="flex items-center gap-4 mb-2">
             <Input
@@ -121,7 +148,7 @@ export default function AdminPage() {
             />
             <Button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-md transition-colors duration-200 whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white text-xs font-medium rounded-md transition-colors duration-200 whitespace-nowrap"
             >
               <span className="text-sm font-normal">+</span>
               Nova Sessão
@@ -129,7 +156,11 @@ export default function AdminPage() {
           </div>
 
           {/* Grid de Sessions (cards) */}
-          {filteredSessions.length > 0 ? (
+          {showLoadingAnimation ? (
+            <div className="flex justify-center items-center py-16">
+              <FryingPanLoading className="py-8" />
+            </div>
+          ) : filteredSessions.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredSessions.map((session) => (
                 <SessionCard

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Sidebar, SidebarItem } from '@/components';
+import { usePathname } from 'next/navigation';
 
 export default function RootLayout({
   children,
@@ -10,6 +11,8 @@ export default function RootLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleMenuToggle = () => setSidebarOpen(!sidebarOpen);
+
+  const pathname = usePathname();
 
   return (
     <div className="flex h-screen">
@@ -22,7 +25,7 @@ export default function RootLayout({
           }
           label="Dashboard"
           href="/admin"
-          isActive={typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')}
+          isActive={pathname.startsWith('/admin')}
         />
         <SidebarItem
           icon={
@@ -33,7 +36,7 @@ export default function RootLayout({
           }
           label="Produtos"
           href="/products"
-          isActive={typeof window !== 'undefined' && window.location.pathname.startsWith('/products')}
+          isActive={pathname.startsWith('/products')}
         />
         <SidebarItem
           icon={

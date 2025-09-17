@@ -4,14 +4,27 @@ import { sessionsApi, CreateSessionData } from "../../../../services/waha/sessio
 // GET - Listar sessões
 export async function GET() {
     try {
+        console.log('🔄 API Route: Fetching sessions...');
+        console.log('🔑 API Key:', process.env.WAHA_API_KEY ? 'Present' : 'Missing');
+        
         const response = await sessionsApi.list();
-        console.log('Sessions fetched successfully:', response.data);
+        console.log('✅ Sessions fetched successfully:', response.data);
         return NextResponse.json(response.data, { status: response.status });
     } catch (error: unknown) {
-        console.error('Error fetching sessions:', error);        
+        console.error('❌ Error fetching sessions:', error);
+        
+        // Log mais detalhado do erro
+        if (error && typeof error === 'object' && 'response' in error) {
+            const apiError = error as { response?: { status?: number; data?: unknown } };
+            console.error('📊 API Error Details:', {
+                status: apiError.response?.status,
+                data: apiError.response?.data
+            });
+        }
+        
         const status = (error as { response?: { status?: number } })?.response?.status || 500;
         return NextResponse.json(
-            { error: 'Failed to fetch sessions' },
+            { error: 'Failed to fetch sessions', details: error instanceof Error ? error.message : 'Unknown error' },
             { status }
         );
     }

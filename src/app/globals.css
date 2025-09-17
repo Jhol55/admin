@@ -30,6 +30,11 @@ body {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
+input[type=file],
+input[type=file]::file-selector-button {
+    cursor: pointer; 
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

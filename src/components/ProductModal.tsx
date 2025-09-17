@@ -136,11 +136,11 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                     <div className="col-span-1">
                       <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Peso mínimo (g) / unidade</label>
-                      <Input type="number" value={form.pesoMin || ''} onChange={e => setForm(f => ({ ...f, pesoMin: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" placeholder="Ex: 200" />
+                      <Input type="number" value={form.pesoMin || ''} onChange={e => setForm(f => ({ ...f, pesoMin: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div className="col-span-1">
                       <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Peso máximo (g) / unidade</label>
-                      <Input type="number" value={form.pesoMax || ''} onChange={e => setForm(f => ({ ...f, pesoMax: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" placeholder="Ex: 500" />
+                      <Input type="number" value={form.pesoMax || ''} onChange={e => setForm(f => ({ ...f, pesoMax: e.target.value }))} className="bg-[var(--input-bg)] border border-[var(--input-border)] text-[var(--foreground)] placeholder-gray-400 px-3 py-1.5 text-xs rounded-md focus:border-[var(--primary)] focus:ring-[var(--primary)]" />
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-[var(--foreground)] mb-1">Comprimento</label>
@@ -174,7 +174,7 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
                             const file = e.target.files?.[0] || null;
                             setForm(f => ({ ...f, imagemCardapio: file }));
                           }}
-                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:text-white hover:file:bg-[var(--primary-hover)]"
+                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:hover:bg-[var(--primary-hover)] file:text-white cursor-pointer"
                         />
                         {form.imagemCardapio ? (
                           <>
@@ -203,7 +203,7 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
                             const file = e.target.files?.[0] || null;
                             setForm(f => ({ ...f, imagemTabelaNutricional: file }));
                           }}
-                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:text-white hover:file:bg-[var(--primary-hover)]"
+                          className="block w-full text-xs text-gray-700 border border-[var(--input-border)] rounded-md bg-[var(--input-bg)] file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:bg-[var(--primary)] file:hover:bg-[var(--primary-hover)] file:text-white cursor-pointer"
                         />
                         {form.imagemTabelaNutricional ? (
                           <>
@@ -228,7 +228,7 @@ const ProductModal = ({ isOpen, onClose, onSave }: ProductModalProps) => {
               {/* Futuras etapas podem ser adicionadas aqui */}
               <div className="flex justify-between items-center bg-transparent p-0 mt-10">
                 <Button type="button" variant="danger" onClick={onClose} className="px-6 py-1.5 rounded-md text-xs font-semibold">Cancelar</Button>
-                <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-6 py-1.5 rounded-md text-xs font-semibold">Avançar</Button>
+                <Button type="submit" className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white px-6 py-1.5 rounded-md text-xs font-semibold">Avançar</Button>
               </div>
             </form>
           </div>
